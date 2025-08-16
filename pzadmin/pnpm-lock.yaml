@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@element-plus/icons-vue':
+        specifier: ^2.3.2
+        version: 2.3.2(vue@3.5.18)
       element-plus:
         specifier: ^2.10.7
         version: 2.10.7(vue@3.5.18)
@@ -20,6 +23,9 @@ importers:
       vue-router:
         specifier: ^4.5.1
         version: 4.5.1(vue@3.5.18)
+      vuex:
+        specifier: '4'
+        version: 4.1.0(vue@3.5.18)
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^6.0.1
@@ -790,6 +796,11 @@ packages:
       typescript:
         optional: true
 
+  vuex@4.1.0:
+    resolution: {integrity: sha512-hmV6UerDrPcgbSy9ORAtNXDr9M4wlNP4pEFKye4ujJF8oqgFFuxDCdOLS3eNoRTtq5O3hoBDh9Doj1bQMYHRbQ==}
+    peerDependencies:
+      vue: ^3.2.0
+
   webpack-virtual-modules@0.6.2:
     resolution: {integrity: sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==}
 
@@ -1462,5 +1473,10 @@ snapshots:
       '@vue/runtime-dom': 3.5.18
       '@vue/server-renderer': 3.5.18(vue@3.5.18)
       '@vue/shared': 3.5.18
+
+  vuex@4.1.0(vue@3.5.18):
+    dependencies:
+      '@vue/devtools-api': 6.6.4
+      vue: 3.5.18
 
   webpack-virtual-modules@0.6.2: {}
