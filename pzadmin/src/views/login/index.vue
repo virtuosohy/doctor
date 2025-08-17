@@ -1,8 +1,11 @@
 <script setup>
 import { ref,reactive} from 'vue'
 import {getCode} from "../../api/index"
+import {userAuthentication ,login} from "../../api/index"
+import {useRouter} from "vue-router"
 import {UserFilled ,Lock} from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
+const router = useRouter()
 const imgUrl = new URL("../../../public/login-head.png",import.meta.url).href
 //切换表单（0表示登录，1表示注册）
 const formType = ref(0)
@@ -67,11 +70,12 @@ const countdownChange = () =>{
       type: "warning",
     })
   }
-  setInterval(() =>{
+  const time = setInterval(() =>{
     if(countdown.time <= 0){
       countdown.validText = "获取验证码"
       countdown.time = 60
       disabled = false
+      clearInterval(time)
     }else{
       countdown.time--
       countdown.validText = "剩余" + countdown.time + "s"
@@ -84,10 +88,38 @@ const countdownChange = () =>{
      }
   })
 }
-
+const loginFormRef = ref()
 //提交表单
-const submit = () => {
-
+const submit = async (formEl) => {
+  if (!formEl) return
+  //手动触发校验
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      console.log('submit!',loginForm)
+      //注册页面
+      if(formType.value){
+        userAuthentication(loginForm).then(({data}) =>{
+          if(data.code === 10000){
+           ElMessage.success("注册成功")
+            formType.value = 0
+          }
+        })
+      }else{
+        //登录
+        login(loginForm).then(({data}) =>{
+          if(data.code === 10000){
+            ElMessage.success("登录成功")
+            //将token和用户信息缓存浏览器
+            localStorage.setItem('pz_token',data.data.token)
+            localStorage.setItem('pz_userInfo',JSON.stringify(data.data.userInfo) )
+            router.push('/')
+          }
+        })
+      }
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
 }
 </script>
 
@@ -103,6 +135,7 @@ const submit = () => {
         <el-link type="primary" @click="handleChange" >{{formType ? '注册账号' :'登录'}}</el-link>
       </div>
       <el-form
+          ref="loginFormRef"
           :model="loginForm"
           style="max-width: 600px"
           class="demo-ruleForm"
@@ -121,7 +154,7 @@ const submit = () => {
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" style="width: 100%" @click="submit">{{formType ? '注册' : '登录'}}</el-button>
+          <el-button type="primary" style="width: 100%" @click="submit(loginFormRef)">{{formType ? '注册' : '登录'}}</el-button>
         </el-form-item>
       </el-form>
     </el-card>
