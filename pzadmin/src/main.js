@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router/index'
 import "./style.css"
 import store from "./store/index.js"
+import PanelHead from './components/panelHead.vue'
 
 
 router.beforeEach((to,from) =>{
@@ -24,7 +25,7 @@ const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
-
+app.component('PanelHead', PanelHead)
 app.use(router)
 app.use(store)
 app.mount('#app')
