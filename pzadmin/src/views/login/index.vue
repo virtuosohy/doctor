@@ -1,12 +1,14 @@
 <script setup>
-import { ref,reactive} from 'vue'
+import { ref,reactive,computed,toRaw} from 'vue'
+import{useStore} from  "vuex"
 import {getCode} from "../../api/index"
-import {userAuthentication ,login} from "../../api/index"
+import {userAuthentication ,login, menuPermissions} from "../../api/index"
 import {useRouter} from "vue-router"
 import {UserFilled ,Lock} from "@element-plus/icons-vue";
-import {ElMessage} from "element-plus";
 const router = useRouter()
+const store = useStore()
 const imgUrl = new URL("../../../public/login-head.png",import.meta.url).href
+const routerList = computed(() =>store.state.menu.routerList)
 //切换表单（0表示登录，1表示注册）
 const formType = ref(0)
 const handleChange = () =>{
@@ -112,7 +114,15 @@ const submit = async (formEl) => {
             //将token和用户信息缓存浏览器
             localStorage.setItem('pz_token',data.data.token)
             localStorage.setItem('pz_userInfo',JSON.stringify(data.data.userInfo) )
-            router.push('/')
+            menuPermissions().then(({data}) =>{
+               store.commit('dynamicMenu',data.data)
+              console.log(routerList,"aaa")
+              toRaw(routerList.value).forEach(item =>{
+                router.addRoute('main',item)
+              })
+              router.push('/')
+            })
+
           }
         })
       }

@@ -2,8 +2,9 @@
 import { ref,reactive ,onMounted ,nextTick} from 'vue'
 import { userGetMenu ,userSetMenu ,menuList} from "../../../api/index"
 import {Plus} from "@element-plus/icons-vue";
+import {useRoute} from 'vue-router'
 
-
+const route = useRoute()
 const visible = ref(false)
 const treeRef = ref()
 const formRef = ref()
@@ -107,7 +108,7 @@ const confirm = async (formEl)=>{
 </script>
 
 <template>
-  <panel-head />
+  <panel-head :route="route" />
   <div class="btn">
     <el-button :icon="Plus" type="primary" size="small" @click="open(null)">新增</el-button>
     </div>

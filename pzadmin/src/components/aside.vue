@@ -5,7 +5,8 @@ import {reactive ,computed} from "vue"
 import { useStore } from 'vuex'
 const store = useStore();
 const router = useRouter();
-const menuDate =  reactive(router.options.routes[0].children);
+// const menuDate =  reactive(router.options.routes[0].children);
+const menuData = computed(() => store.state.menu.routerList);
 const isCollapse = computed(() => store.state.menu.isCollapsed);
 const handleOpen = (key, keyPath) => {}
 const handleClose = (key, keyPath) => {}
@@ -25,7 +26,7 @@ const handleClose = (key, keyPath) => {}
       :collapse="isCollapse"
   >
     <p class="logo-lg">{{isCollapse ? 'xx' : "xx陪诊"}}</p>
-  <treeMenu :index="1" :menuDate="menuDate"/>
+  <treeMenu :index="1" :menuDate="menuData"/>
   </el-menu>
 </template>
 

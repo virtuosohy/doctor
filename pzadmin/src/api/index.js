@@ -28,3 +28,20 @@ export const userSetMenu = (data) =>{
 export const menuList = (params) =>{
    return request.get('/menu/list' ,{params})
 }
+
+//权限列表下拉
+export const menuSelectSist = () =>{
+   return request.get('/menu/selectlist' )
+}
+
+//修改用户信息
+export const updateUser = (data) =>{
+   return request.post('/update/user',data)
+}
+
+//用户菜单权限
+export const menuPermissions = () =>{
+   return request.get('/menu/permissions' )
+}
+
+

@@ -30,6 +30,15 @@ const closeTab = (item,index) => {
     router.push(selectMenuData[index + 1].path)
   }
 }
+
+const handleClick = (command) => {
+  if(command === 'cancel'){
+    localStorage.removeItem('pz_token')
+    localStorage.removeItem('pz_userInfo')
+    localStorage.removeItem('pz_v3pz')
+    window.location.href = window.location.origin
+}
+}
 </script>
 
 <template>
@@ -49,7 +58,7 @@ const closeTab = (item,index) => {
     </ul>
   </div>
   <div class="header-right">
-    <el-dropdown>
+    <el-dropdown @command="handleClick">
      <div class="el-dropdown-link flex-box">
        <el-avatar
            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
@@ -58,11 +67,7 @@ const closeTab = (item,index) => {
      </div>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item>Action 1</el-dropdown-item>
-        <el-dropdown-item>Action 2</el-dropdown-item>
-        <el-dropdown-item>Action 3</el-dropdown-item>
-        <el-dropdown-item disabled>Action 4</el-dropdown-item>
-        <el-dropdown-item divided>Action 5</el-dropdown-item>
+        <el-dropdown-item command="cancel">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown></div>
