@@ -5,8 +5,10 @@ import {useStore} from "vuex"
 const store = useStore();
 const router = useRouter();
 const handleClick = (item,active) =>{
-  router.push(item.meta.path)
+
+  store.commit('updateMenuActive',active)
   store.commit("addMenu",item.meta)
+  router.push(item.meta.path)
 }
 
 </script>

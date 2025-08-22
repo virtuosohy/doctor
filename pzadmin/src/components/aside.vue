@@ -10,6 +10,7 @@ const menuData = computed(() => store.state.menu.routerList);
 const isCollapse = computed(() => store.state.menu.isCollapsed);
 const handleOpen = (key, keyPath) => {}
 const handleClose = (key, keyPath) => {}
+const active =computed(() => store.state.menu.menuActive);
 
 </script>
 
@@ -19,11 +20,11 @@ const handleClose = (key, keyPath) => {}
       active-text-color="#ffd04b"
       background-color="#545c64"
       class="el-menu-vertical-demo"
-      default-active="2"
       text-color="#fff"
       @open="handleOpen"
       @close="handleClose"
       :collapse="isCollapse"
+      :default-active="active"
   >
     <p class="logo-lg">{{isCollapse ? 'xx' : "xx陪诊"}}</p>
   <treeMenu :index="1" :menuDate="menuData"/>
