@@ -5,7 +5,7 @@ export default {
         return request.post('/login',data)
     },
      //首页数据
-     index(){
+    index(){
         return request.get('/Index/index')
      }
 }

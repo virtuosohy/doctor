@@ -9,15 +9,18 @@ const homeData = reactive({
   nav2s:[],
   navs:[],
   now:'',
-  sliders:[]
+  slides:[]
 })
 
 
 onMounted( async ()=> {
   const { data } = await proxy.$api.index()
-  console.log(data);
   Object.assign(homeData,data.data)
+  console.log(homeData);
 })
+
+//跳转方法
+const goOrderTwo =() =>{}
 
 </script>
 <template>
@@ -32,15 +35,47 @@ onMounted( async ()=> {
         placeholder="请输入搜索关键词"
     />
   </div>
-  <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+  <van-swipe class="my-swiper" height:170px :autoplay="3000" indicator-color="white">
     <van-swipe-item
-        v-for="item in homeData.sliders"
+        v-for="item in homeData.slides"
         :key="item.id">
       <van-image
+          radius="5"
           :src="item.pic_image_url"
       />
     </van-swipe-item>
   </van-swipe>
+  <van-row justify="space-around">
+    <van-col class="center-img"
+             span="11"
+             v-for="(item,index) in homeData.nav2s"
+             :key="item.id"
+              @click="goOrderTwo(index)"
+    >
+      <van-image
+          :src="item.pic_image_url"
+      />
+    </van-col>
+  </van-row>
+
+  <van-row class="yy-list" v-for="item in homeData.hospitals"  justify="space-around">
+   <van-col span="6">
+     <van-image
+         width="100"
+         height="90"
+         :src="item.avatar_url"
+     />
+   </van-col>
+    <van-col class="yy" span="15">
+      <div class="yy-name">{{ item.name }}</div>
+      <div class="yy-type">
+        <span>{{ item.rank }}</span>
+        &nbsp
+        <span>{{ item.label }}</span>
+      </div>
+      <div class="yy-text">{{ item.intro }}</div>
+    </van-col>
+  </van-row>
 </template>
 
 <style lang="less" scoped>

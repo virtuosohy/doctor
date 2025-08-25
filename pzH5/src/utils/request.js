@@ -3,7 +3,7 @@ import axios from 'axios';
 const http = axios.create({
     baseURL: 'https://v3pz.itndedu.com/v3pz',
     timeout:10000,
-    header:{"terminal":"h5"}
+    headers:{"terminal":"h5"}
 })
 
 // 添加请求拦截器
@@ -11,7 +11,7 @@ http.interceptors.request.use(function (config) {
 // 在发送请求之前做些什么
     const token = localStorage.getItem('h5_token')
 // 不需要添加token的api
-    const whiteUrl = [ '/login']
+    const whiteUrl = ['/login']
     if (token && !whiteUrl.includes(config.url)) {
         config.headers['h-token'] = token
     }
