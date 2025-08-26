@@ -1,5 +1,7 @@
 <script setup>
 import {ref,reactive,onMounted ,getCurrentInstance} from "vue";
+import { useRouter } from 'vue-router'
+const router = useRouter();
 const { proxy } = getCurrentInstance();
 const searchValue = ref("");
 
@@ -16,12 +18,16 @@ const homeData = reactive({
 onMounted( async ()=> {
   const { data } = await proxy.$api.index()
   Object.assign(homeData,data.data)
-  console.log(homeData);
 })
 
 //跳转方法
-const goOrderTwo =() =>{}
+const goOrderTwo =(index) =>{
+  router.push(`/createOrder?id=${homeData.hospitals[index].id}`)
+}
 
+const goOrder =(data) =>{
+  router.push(`/createOrder?id=${data.id}`)
+}
 </script>
 <template>
   <div class="header">
@@ -58,7 +64,7 @@ const goOrderTwo =() =>{}
     </van-col>
   </van-row>
 
-  <van-row class="yy-list" v-for="item in homeData.hospitals"  justify="space-around">
+  <van-row @click="goOrder(item)" class="yy-list" v-for="item in homeData.hospitals"  justify="space-around">
    <van-col span="6">
      <van-image
          width="100"

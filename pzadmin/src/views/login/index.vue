@@ -116,7 +116,6 @@ const submit = async (formEl) => {
             localStorage.setItem('pz_userInfo',JSON.stringify(data.data.userInfo) )
             menuPermissions().then(({data}) =>{
                store.commit('dynamicMenu',data.data)
-              console.log(routerList,"aaa")
               toRaw(routerList.value).forEach(item =>{
                 router.addRoute('main',item)
               })
