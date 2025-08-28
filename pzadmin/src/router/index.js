@@ -8,7 +8,7 @@ import Dashboard from '../views/dashboard/index.vue'
 
 import { createRouter, createWebHashHistory } from "vue-router";
 
-const localData = localStorage.getItem('pz_v3pz')
+
 
 const routes = [
     {
@@ -16,6 +16,7 @@ const routes = [
         component: Layout,
         name: 'main',
         redirect: to =>{
+            const localData = localStorage.getItem('pz_v3pz')
             if(localData){
                 //有子菜单
                 const child = JSON.parse(localData).menu.routerList[0].children
@@ -25,7 +26,7 @@ const routes = [
                     return JSON.parse(localData).menu.routerList[0].meta.path
                 }
             }else{
-                return '/'
+                return '/login'
             }
         },
         children: [
